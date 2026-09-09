@@ -1,0 +1,14 @@
+.duo-root { position: relative; isolation: isolate; }
+.duo-background { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.duo-device { position: relative; width: 100%; height: 520px; }
+.duo-device canvas { display: block; width: 100%; height: 100%; }
+.duo-device-target { position: absolute; inset: 8% 12%; border: 0; border-radius: 24px; background: transparent; cursor: grab; touch-action: pan-y; }
+.duo-device-target:active { cursor: grabbing; }
+.duo-device-target:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.duo-device-target:disabled { cursor: wait; }
+.duo-status { position: absolute; inset: 45% 16% auto; padding: 12px 16px; text-align: center; font-size: 13px; line-height: 20px; color: var(--duo-ink, #34332f); background: var(--duo-paper, #f4f3ef); border-radius: 8px; pointer-events: none; }
+.duo-credit { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration: none; text-underline-offset: 4px; white-space: nowrap; }
+.duo-credit:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.duo-scrubber { width: 136px; height: 44px; accent-color: var(--duo-ink, #34332f); cursor: ew-resize; }
+@media (hover: hover) and (pointer: fine) { .duo-credit:hover { text-decoration: underline; } }
+@media (max-width: 600px) { .duo-device { height: 400px; } .duo-device-target { inset: 12% 4%; } .duo-scrubber { width: 96px; } }
