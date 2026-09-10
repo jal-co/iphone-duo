@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState, type ComponentProps, type ReactNode } from 'react'
 import { animate, useMotionValue, useMotionValueEvent, useReducedMotion, type MotionValue } from 'motion/react'
 import './foldable-phone.css'
+import { FOLD_DURATION } from './fold-choreography'
 
 type FoldContext = { progress: MotionValue<number>; setValue: (value: number) => void; toggle: (instant?: boolean) => void }
 const Context = createContext<FoldContext | undefined>(undefined)
@@ -18,7 +19,7 @@ export type FoldablePhoneProps = Omit<ComponentProps<'div'>, 'defaultValue' | 'o
   duration?: number
 }
 
-export function FoldablePhone({ value, defaultValue = 0, onValueChange, duration = 0.85, children, className = '', ...props }: FoldablePhoneProps) {
+export function FoldablePhone({ value, defaultValue = 0, onValueChange, duration = FOLD_DURATION, children, className = '', ...props }: FoldablePhoneProps) {
   const progress = useMotionValue(value ?? defaultValue)
   const reducedMotion = useReducedMotion()
   const destination = useRef(value ?? defaultValue)
@@ -49,7 +50,7 @@ export function FoldablePhone({ value, defaultValue = 0, onValueChange, duration
     animation.current?.stop()
     destination.current = target
     if (instant || reducedMotion) { progress.set(target); return }
-    animation.current = animate(progress, target, { duration: duration * Math.max(0.25, Math.abs(target - progress.get())), ease: [0.45, 0, 0.2, 1] })
+    animation.current = animate(progress, target, { duration: duration * Math.max(0.25, Math.abs(target - progress.get())), ease: 'linear' })
   }
   return <Context.Provider value={{ progress, setValue, toggle }}><div {...props} className={`duo-root ${className}`}>{children}</div></Context.Provider>
 }

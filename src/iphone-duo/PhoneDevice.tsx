@@ -3,6 +3,7 @@ import { useMotionValueEvent, useReducedMotion } from 'motion/react'
 import { ACESFilmicToneMapping, AmbientLight, DirectionalLight, PerspectiveCamera, PMREMGenerator, Scene, SRGBColorSpace, TextureLoader, WebGLRenderer, type Texture } from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { loadPhone } from './model'
+import { foldChoreography } from './fold-choreography'
 import { useFoldablePhone } from './FoldablePhone'
 
 type PhoneModel = Awaited<ReturnType<typeof loadPhone>>
@@ -27,9 +28,10 @@ function PhoneDeviceSurface({ modelSrc, screenSrc, coverSrc = screenSrc, screenO
     const current = surface.current
     if (!current) return
     const p = Math.max(0, Math.min(1, progress.get()))
-    const hingeTime = Math.max(0, Math.min(1, (p - 0.1) / 0.72))
-    const hinge = hingeTime * hingeTime * (3 - 2 * hingeTime)
-    const angle = (1 - hinge) * Math.PI
+    const motion = foldChoreography(p)
+    const { angle } = motion
+    current.model.screen.uniforms.defocus.value = motion.innerDefocus
+    current.model.cover.uniforms.focusEdge.value = motion.coverFocusEdge
     current.model.screen.uniforms.progress.value = p
     current.model.cover.uniforms.progress.value = p
     current.model.screen.uniforms.blur.value = blur
@@ -39,6 +41,9 @@ function PhoneDeviceSurface({ modelSrc, screenSrc, coverSrc = screenSrc, screenO
     current.model.body.rotation.y = rotation * Math.PI / 180
     current.model.screen.uniforms.parallax.value = reducedMotion ? 0 : parallax
     current.model.cover.uniforms.parallax.value = reducedMotion ? 0 : parallax
+    current.model.body.updateMatrixWorld(true)
+    current.model.screen.uniforms.bodyInverse.value.copy(current.model.body.matrixWorld).invert()
+    current.model.cover.uniforms.bodyInverse.value.copy(current.model.body.matrixWorld).invert()
     current.renderer.toneMappingExposure = exposure
     current.draw()
   })

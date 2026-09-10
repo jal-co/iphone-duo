@@ -1,6 +1,6 @@
 # iPhone Duo
 
-A composable React folding-phone study with drag-to-fold interaction, layered screen content, and progressive blur. Built with React 19, Three.js, and Motion. The demo includes DialKit controls, original SVG app icons, and a Mastra Factory reveal card.
+A composable React folding-phone study with drag-to-fold interaction, layered screen content, and progressive blur. Built with React 19, Three.js, and Motion. The demo includes DialKit controls, API-sourced app icons, and a Mastra Factory reveal card.
 
 The 3D phone model and desert wallpapers are by [Apple](https://www.apple.com/iphone-duo/). This is an independent study, not an Apple product or an official Mastra announcement.
 
@@ -13,7 +13,7 @@ npm ci
 npm run dev -- --host 127.0.0.1 --port 5201
 ```
 
-Open `http://127.0.0.1:5201`. Drag horizontally across the phone, click to toggle, or scrub the transition. The Tune panel adjusts duration, blur, content parallax, rotation, lighting, backgrounds, and screen images. Demo settings persist locally.
+Open `http://127.0.0.1:5201`. Drag horizontally across the phone, click to toggle, or scrub the transition. The Tune panel adjusts duration, blur, content parallax, lighting, backgrounds, and screen images. Demo settings persist locally.
 
 ```sh
 npm run build
@@ -72,7 +72,7 @@ Give the device container an explicit height. `src/iphone-duo/foldable-phone.css
 | `AppleCredit` | Visible link to the model source. |
 | `useFoldablePhone()` | Returns the `progress` MotionValue, `setValue(number)`, and `toggle(instant?)`. |
 
-Progress runs from `0` (closed) to `1` (open and settled). It describes the whole transition, not a linear hinge angle. The hinge finishes before the incoming card finishes sharpening. `duration` defaults to `0.85`; the demo uses `2` seconds.
+Progress runs from `0` (closed) to `1` (open and settled). It describes the whole transition, not a linear hinge angle. The hinge finishes before the incoming card finishes sharpening. `duration` defaults to `2`; the demo uses `2` seconds.
 
 `PhoneDevice` accepts:
 

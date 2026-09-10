@@ -11,8 +11,7 @@ export default function App() {
   const [dark, setDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
   const dial = useDialKitController('iPhone Duo', {
     fold: [0, 0, 180, 1],
-    rotation: [-6, -35, 35, 1],
-    duration: [2, 0.2, 3, 0.05],
+    duration: [2, 0.2, 4, 0.05],
     blur: [48, 0, 80, 1],
     parallax: [1, 0, 2, 0.05],
     exposure: [1.2, 0.5, 2, 0.05],
@@ -27,7 +26,7 @@ export default function App() {
   return <main className={dark ? 'page dark' : 'page'}>
     <FoldablePhone className="phone-study" value={values.fold / 180} onValueChange={value => dial.setValue('fold', value * 180)} duration={values.duration}>
       <PhoneBackground data-background={values.background} />
-      <PhoneDevice modelSrc="/models/iphone-duo.glb" screenSrc={values.screen} coverSrc={values.cover} rotation={values.rotation} exposure={values.exposure} blur={values.blur} parallax={values.parallax} revealSrc={values.screen === '/wallpapers/apple-desert.avif' ? '/wallpapers/home-photo.svg' : undefined} screenOverlaySrc={values.screen === '/wallpapers/apple-desert.avif' ? '/wallpapers/home-apps.svg' : undefined} coverOverlaySrc={values.cover === '/wallpapers/apple-desert-cover.avif' ? '/wallpapers/home-cover.svg' : undefined} />
+      <PhoneDevice modelSrc="/models/iphone-duo.glb" screenSrc={values.screen} coverSrc={values.cover} rotation={-6} exposure={values.exposure} blur={values.blur} parallax={values.parallax} revealSrc={values.screen === '/wallpapers/apple-desert.avif' ? '/wallpapers/home-photo.svg' : undefined} screenOverlaySrc={values.screen === '/wallpapers/apple-desert.avif' ? '/wallpapers/api-apps.svg' : undefined} coverOverlaySrc={values.cover === '/wallpapers/apple-desert-cover.avif' ? '/wallpapers/api-cover.svg' : undefined} />
       <div className="phone-controls">
         <div className="fold-controls"><FoldToggle /><FoldScrubber /><output aria-label="Opening angle">{Math.round(values.fold)}°</output></div>
         <div className="wallpaper-controls" role="group" aria-label="Wallpaper">
